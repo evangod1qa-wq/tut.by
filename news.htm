@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Новости - Красный стиль 2000</title>
+    <style>
+        body {
+            font-family: Verdana, Arial, Helvetica, sans-serif; /* Более современный шрифт для 2000-х */
+            background-color: #FFFFFF;
+            margin: 0;
+            padding: 0;
+            font-size: 13px;
+            color: #000000;
+        }
+        table {
+            width: 780px;
+            margin: 10px auto;
+            border-collapse: collapse;
+            border: 1px solid #CC0000; /* Красная граница */
+        }
+        td {
+            padding: 5px;
+            vertical-align: top;
+            border: 1px solid #CC0000;
+        }
+        .header-cell {
+            background-color: #CC0000; /* Ярко-красный заголовок */
+            color: #FFFFFF;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px;
+            text-align: center;
+        }
+        .sidebar {
+            width: 180px;
+            background-color: #F0F0F0; /* Светло-серый сайдбар */
+        }
+        .main-content {
+            background-color: #FFFFFF;
+        }
+        .news-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #CC0000; /* Заголовки новостей красным */
+            text-decoration: underline;
+        }
+        .news-date {
+            font-size: 10px;
+            color: #666666;
+            display: block;
+            margin-bottom: 3px;
+        }
+        .footer-cell {
+            background-color: #F0F0F0;
+            font-size: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<table>
+    <tr>
+        <td colspan="2" class="header-cell">
+            ПОРТАЛ НОВОСТЕЙ (Красный стиль)
+        </td>
+    </tr>
+    <tr>
+        <td class="sidebar">
+            <p><strong>РЕСУРСЫ</strong></p>
+            <ul>
+                <li><a href="#">Погода</a></li>
+                <li><a href="#">Форум</a></li>
+                <li><a href="#">Контакты</a></li>
+            </ul>
+            <hr>
+            <p style="background-color: #FFEEEE; padding: 5px; border: 1px solid #CC0000;">
+                Это место для формы **добавления новости** (потребуется PHP/Backend).
+            </p>
+        </td>
+        <td class="main-content">
+            <h1>ГЛАВНЫЕ НОВОСТИ</h1>
+            
+            <div class="news-item">
+                <span class="news-date">24 Января 2026</span>
+                <div class="news-title">Заголовок первой новости</div>
+                <p>Краткий анонс новости. Здесь будет текст из вашей базы данных.</p>
+            </div>
+            
+            <div class="news-item">
+                <span class="news-date">23 Января 2026</span>
+                <div class="news-title">Вторая важная статья дня</div>
+                <p>Краткий анонс новости.</p>
+            </div>
+            
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" class="footer-cell">
+            &copy; 2026 Все права защищены.
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

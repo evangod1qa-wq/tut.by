@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>S.Y.S.T.E.M. DIAGNOSTICS</title>
+    <style>
+        :root {
+            --glass: rgba(15, 25, 45, 0.4);
+            --border: rgba(255, 255, 255, 0.15);
+            --neon-blue: #00d4ff;
+            --neon-purple: #9d00ff;
+        }
+
+        body, html {
+            margin: 0; padding: 0; height: 100%; overflow: hidden;
+            background: #010409; font-family: 'Segoe UI', sans-serif;
+            display: flex; justify-content: center; align-items: center; color: white;
+        }
+
+        /* Твой любимый фон с плавающими кругами */
+        .bg-container {
+            position: absolute; width: 100%; height: 100%; z-index: -1; filter: blur(100px);
+            animation: rotateBg 30s linear infinite;
+        }
+        .circle {
+            position: absolute; border-radius: 50%; opacity: 0.6;
+        }
+        .c1 { width: 500px; height: 500px; background: var(--neon-blue); top: 10%; left: 20%; }
+        .c2 { width: 600px; height: 600px; background: var(--neon-purple); bottom: 10%; right: 15%; }
+
+        @keyframes rotateBg {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        /* Контейнер-стекло */
+        .poll-box {
+            background: var(--glass);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 50px;
+            width: 450px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        h2 { font-weight: 300; letter-spacing: 3px; margin-bottom: 30px; color: var(--neon-blue); }
+
+        .question { font-size: 1.1rem; margin-bottom: 25px; opacity: 0.9; }
+
+        .options-list { list-style: none; padding: 0; }
+
+        .option-item {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            margin-bottom: 12px;
+            padding: 15px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            position: relative;
+        }
+
+        .option-item:hover {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: var(--neon-blue);
+            transform: translateX(10px);
+        }
+
+        .option-item.selected {
+            background: var(--neon-blue);
+            color: #000;
+            font-weight: bold;
+        }
+
+        .btn-next {
+            margin-top: 20px;
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            border: none;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+        }
+
+        .progress-bar {
+            height: 4px; background: rgba(255,255,255,0.1);
+            position: absolute; top: 0; left: 0; width: 100%;
+        }
+        .progress-fill {
+            height: 100%; background: var(--neon-blue); width: 25%; transition: 0.5s;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-container">
+        <div class="circle c1"></div>
+        <div class="circle c2"></div>
+    </div>
+
+    <div class="poll-box">
+        <div class="progress-bar"><div class="progress-fill" id="p-bar"></div></div>
+        <h2 id="step-title">DIAGNOSTICS: 01</h2>
+        
+        <div id="poll-content">
+            <p class="question" id="q-text">Какую роль ты обычно выбираешь в команде?</p>
+            <div class="options-list">
+                <div class="option-item" onclick="select(this)">Штурмовик (Агрессия и натиск)</div>
+                <div class="option-item" onclick="select(this)">Снайпер (Дистанция и расчет)</div>
+                <div class="option-item" onclick="select(this)">Инженер (Технологии и хитрость)</div>
+                <div class="option-item" onclick="select(this)">Танк (Защита и мощь)</div>
+            </div>
+        </div>
+
+        <button class="btn-next" onclick="nextStep()">СЛЕДУЮЩИЙ ЭТАП</button>
+    </div>
+
+    <script>
+        let step = 1;
+        const questions = [
+            "",
+            "Какую роль ты обычно выбираешь в команде?",
+            "Твое любимое время суток для игры?",
+            "Что важнее в лаунчере?",
+            "Готов к загрузке данных?"
+        ];
+
+        function select(el) {
+            document.querySelectorAll('.option-item').forEach(i => i.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+
+        function nextStep() {
+            if (step < 4) {
+                step++;
+                document.getElementById('p-bar').style.width = (step * 25) + '%';
+                document.getElementById('step-title').innerText = 'DIAGNOSTICS: 0' + step;
+                document.getElementById('q-text').innerText = questions[step];
+                
+                // Эффект мерцания при смене
+                const content = document.getElementById('poll-content');
+                content.style.opacity = 0;
+                setTimeout(() => content.style.opacity = 1, 200);
+            } else {
+                document.querySelector('.poll-box').innerHTML = "<h2>АНАЛИЗ ЗАВЕРШЕН</h2><p>Ты идеальный пользователь GAME CENTER.</p><button class='btn-next' onclick='location.reload()'>ЗАНОВО</button>";
+            }
+        }
+    </script>
+</body>
+</html>

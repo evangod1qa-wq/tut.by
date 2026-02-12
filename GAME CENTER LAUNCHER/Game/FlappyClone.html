@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Летающая птица</title>
+    <style>
+        body { background: #010409; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        canvas { background: #70c5ce; border: 2px solid #00d4ff; }
+    </style>
+</head>
+<body>
+    <canvas id="game" width="400" height="400"></canvas>
+    <script>
+        const canvas = document.getElementById('game');
+        const ctx = canvas.getContext('2d');
+        const bird = { x: 50, y: 150, dy: 0, gravity: 0.3, jump: -6 };
+        const pipes = [];
+        let score = 0, frame = 0;
+
+        function jump() { bird.dy = bird.jump; }
+        document.addEventListener('click', jump);
+
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            bird.dy += bird.gravity; bird.y += bird.dy;
+            if (bird.y > canvas.height || bird.y < 0) { alert('Крах! Счет: ' + score); score = 0; bird.y = 150; pipes.length = 0; }
+            ctx.fillStyle = '#ff0'; ctx.fillRect(bird.x, bird.y, 20, 20); // Птица
+
+            if (frame % 100 === 0) { pipes.push({ x: canvas.width, y: Math.random() * (canvas.height - 150) + 50, width: 40, gap: 100 }); }
+            ctx.fillStyle = '#3a2'; // Трубы
+            for (let i = 0; i < pipes.length; i++) {
+                pipes[i].x -= 2;
+                ctx.fillRect(pipes[i].x, 0, pipes[i].width, pipes[i].y - pipes[i].gap / 2);
+                ctx.fillRect(pipes[i].x, pipes[i].y + pipes[i].gap / 2, pipes[i].width, canvas.height - pipes[i].y - pipes[i].gap / 2);
+
+                if (bird.x < pipes[i].x + pipes[i].width && bird.x + 20 > pipes[i].x &&
+                    (bird.y < pipes[i].y - pipes[i].gap / 2 || bird.y + 20 > pipes[i].y + pipes[i].gap / 2)) {
+                    alert('Крах! Счет: ' + score); score = 0; bird.y = 150; pipes.length = 0;
+                }
+                if (pipes[i].x + pipes[i].width < bird.x && !pipes[i].counted) { score++; pipes[i].counted = true; }
+            }
+            ctx.fillStyle = '#fff'; ctx.fillText('Счет: ' + score, 10, 20);
+            frame++; requestAnimationFrame(gameLoop);
+        }
+        gameLoop();
+    </script>
+</body>
+</html>

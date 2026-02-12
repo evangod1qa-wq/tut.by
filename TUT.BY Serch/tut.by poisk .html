@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Расширенный Поиск по порталу TUT.BY</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f5f5f5; margin: 0; padding: 20px; }
+        .search-wrapper { max-width: 800px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #cc0000; text-align: center; margin-bottom: 25px; font-size: 22px; border-bottom: 2px solid #cc0000; padding-bottom: 10px; }
+        /* Стили для контейнера результатов */
+        .gcse-searchresults-only { margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="search-wrapper">
+    <h1>Расширенный Поиск по порталу TUT.BY</h1>
+    
+    <!-- Подключаем ядро поиска Google -->
+    <script async src="https://cse.google.com"></script>
+    
+    <!-- 
+       Атрибут data-as_sitesearch ограничивает поиск только твоим сайтом.
+       Атрибут data-linktarget="_self" открывает ссылки в том же окне.
+    -->
+    <div class="gcse-search" 
+         data-as_sitesearch="life.w10.site" 
+         data-enableHistory="true"
+         data-placeholder="Что ищем на life.w10.site?">
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,185 @@
+:root {
+    --glass-bg: rgba(255, 255, 255, 0.1); /* Полупрозрачный фон */
+    --border-color: rgba(255, 255, 255, 0.3); /* Тонкая светлая граница */
+    --text-color: #e0e0e0;
+    --accent-color: #007bff; /* Синий акцент */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1e3a8a, #10b981); /* Сине-зеленый градиент */
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden; /* Скрываем прокрутку для фона */
+}
+
+.container {
+    width: 90%;
+    max-width: 600px;
+    padding: 20px;
+    z-index: 10;
+}
+
+/* Стили Glassmorphism для карточек */
+.card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px); /* Эффект "жидкого стекла" */
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.header-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile-section {
+    display: flex;
+    align-items: center;
+}
+
+.profile-icon {
+    width: 50px;
+    height: 50px;
+    background-color: #60a5fa;
+    border-radius: 15px;
+    margin-right: 15px;
+}
+
+.play-button {
+    background-color: var(--accent-color);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 123, 255, 0.3);
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.game-item {
+    display: flex;
+    align-items: center;
+}
+
+.game-icon {
+    width: 80px;
+    height: 80px;
+    background-color: #f97316; /* Оранжевый цвет для дино */
+    border-radius: 15px;
+    margin-right: 20px;
+}
+
+.second-icon {
+    background-color: #10b981; /* Зеленый цвет для другой игры */
+}
+
+.game-info h2 {
+    margin-bottom: 5px;
+}
+
+.play-small {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    padding: 5px 15px;
+    border-radius: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.play-small:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Анимация заднего фона (плавающие круги) */
+.background span {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    animation: animate 15s linear infinite;
+    /* Размытие самих кругов */
+    filter: blur(10px); 
+}
+
+.background span:nth-child(1) { top: 10%; left: 10%; animation-duration: 12s; background: rgba(0, 123, 255, 0.5); }
+.background span:nth-child(2) { top: 20%; left: 40%; animation-duration: 20s; background: rgba(255, 0, 123, 0.3); }
+.background span:nth-child(3) { top: 50%; left: 80%; animation-duration: 15s; background: rgba(0, 255, 123, 0.4); }
+.background span:nth-child(4) { top: 80%; left: 20%; animation-duration: 18s; background: rgba(123, 0, 255, 0.6); }
+.background span:nth-child(5) { top: 90%; left: 90%; animation-duration: 10s; background: rgba(255, 255, 0, 0.3); }
+.background span:nth-child(6) { top: 10%; left: 60%; animation-duration: 14s; background: rgba(0, 255, 255, 0.4); }
+.background span:nth-child(7) { top: 60%; left: 5%; animation-duration: 16s; background: rgba(255, 100, 50, 0.5); }
+.background span:nth-child(8) { top: 30%; left: 25%; animation-duration: 22s; background: rgba(50, 150, 255, 0.6); }
+.background span:nth-child(9) { top: 70%; left: 40%; animation-duration: 13s; background: rgba(200, 50, 255, 0.4); }
+.background span:nth-child(10) { top: 40%; left: 95%; animation-duration: 19s; background: rgba(50, 255, 200, 0.5); }
+
+
+@keyframes animate {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+    }
+    100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+    }
+}
+
+/* --- Медиазапрос для мобильных устройств (ширина экрана до 600px) --- */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px; /* Уменьшаем отступы по краям экрана */
+        width: 100%;
+    }
+
+    .header-card {
+        flex-direction: column; /* Перестраиваем шапку в столбец */
+        align-items: flex-start;
+        gap: 15px; /* Добавляем расстояние между элементами */
+    }
+    
+    .play-button {
+        width: 100%; /* Делаем кнопку "Играть" во всю ширину */
+        text-align: center;
+    }
+
+    .game-item {
+        flex-direction: column; /* Перестраиваем игровые карточки в столбец */
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+    }
+    
+    .game-icon {
+        margin-right: 0;
+    }
+}

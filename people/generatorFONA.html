@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaScape Design - Генератор фонов Frutiger Aero</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Rubik:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        /* Общие стили для Frutiger Aero */
+        :root {
+            --color-primary-light: #6dd5ed; /* Light Blue */
+            --color-primary-dark: #2193b0;  /* Dark Blue */
+            --color-accent-blue: #00bcd4;   /* Cyan */
+            --color-accent-green: #00d283;  /* Emerald */
+            --color-text-dark: #333;
+            --color-text-light: #fff;
+            --glass-bg-color: rgba(255, 255, 255, 0.4);
+            --glass-border-color: rgba(255, 255, 255, 0.6);
+            --glass-shadow-color: rgba(0, 0, 0, 0.1);
+            --highlight-color: rgba(255, 255, 255, 0.8);
+        }
+
+        body {
+            font-family: 'Rubik', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); /* Общий фон страницы */
+            color: var(--color-text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden; /* Чтобы пузырьки не выходили за пределы */
+            position: relative; /* Для позиционирования пузырьков */
+        }
+
+        /* Анимированные пузырьки на фоне */
+        .bubble {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: bubbleFloat 15s infinite ease-in-out alternate;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5) inset, 0 0 5px rgba(0, 0, 0, 0.1);
+            z-index: 0; /* Под всеми элементами */
+        }
+
+        .bubble:nth-child(1) { width: 60px; height: 60px; left: 10%; top: 20%; animation-duration: 12s; opacity: 0.7; }
+        .bubble:nth-child(2) { width: 100px; height: 100px; left: 70%; top: 10%; animation-duration: 18s; opacity: 0.6; }
+        .bubble:nth-child(3) { width: 80px; height: 80px; left: 40%; top: 80%; animation-duration: 15s; opacity: 0.8; }
+        .bubble:nth-child(4) { width: 120px; height: 120px; left: 20%; top: 50%; animation-duration: 10s; opacity: 0.5; }
+ .bubble:nth-child(5) { width: 70px; height: 70px; left: 85%; top: 60%; animation-duration: 14s; opacity: 0.7; }
+
+        @keyframes bubbleFloat {
+            0% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-20px) translateX(10px); }
+            100% { transform: translateY(0) translateX(0); }
+        }
+
+
+        .container {
+            max-width: 900px;
+            width: 95%;
+            margin: 20px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 1; /* Над пузырьками */
+        }
+
+        /* Стиль "стеклянной" панели */
+        .glass-panel {
+            background: var(--glass-bg-color); /* Полупрозрачный фон */
+            backdrop-filter: blur(10px); /* Эффект размытия - ключ к glassmorphism */
+            -webkit-backdrop-filter: blur(10px); /* Для Safari */
+            border: 1px solid var(--glass-border-color); /* Светлая рамка */
+            border-radius: 20px; /* Скругленные углы */
+            box-shadow: 0 4px 30px var(--glass-shadow-color), /* Глубокая тень */
+                        0 1px 1px var(--highlight-color) inset; /* Внутренний блик */
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden; /* Важно для внутренних элементов */
+        }
+
+        .glass-panel::before { /* Дополнительный блик/глянец */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 100%);
+            border-radius: 20px 20px 0 0;
+            pointer-events: none;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3em;
+            font-weight: 700;
+            color: #333;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2), 
+                         -1px -1px 0px rgba(255, 255, 255, 0.8); /* Объемный текст */
+            margin: 0 0 10px 0;
+        }
+
+        .tagline {
+            font-size: 1.2em;     color: #555;
+            margin: 0;
+        }
+
+        .main-content {
+            display: flex;
+            flex-wrap: wrap; /* Для адаптивности */
+            gap: 20px;
+        }
+
+        .wallpaper-display {
+            flex: 2; /* Занимает больше места */
+            min-height: 350px;
+            background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary-dark) 100%); /* Фоновый градиент */
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5em;
+            color: var(--color-text-light);
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            padding: 20px;
+            position: relative; /* Для watermark */
+        }
+
+        .watermark {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.6);
+            pointer-events: none;
+        }
+
+        .controls-panel {
+            flex: 1; /* Занимает оставшееся место */
+            min-width: 280px; /* Минимальная ширина для панели */
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            text-align: left;
+        }
+
+        .controls-panel h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8em;
+            color: #333;
+text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+            margin-top: 0;
+            text-align: center;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .control-group label {
+            font-weight: 500;
+            color: #444;
+            text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);
+        }
+
+        /* Стили для инпутов (цвет, диапазон) */
+        input[type="color"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 40px;
+            background-color: transparent;
+            border: 2px solid var(--glass-border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            outline: none;
+            box-shadow: 0 1px 5px var(--glass-shadow-color) inset;
+            padding: 5px;
+        }
+        input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+        input[type="color"]::-webkit-color-swatch { border: none; border-radius: 6px; }
+        input[type="color"]::-moz-color-swatch-wrapper { padding: 0; }
+        input[type="color"]::-moz-color-swatch { border: none; border-radius: 6px; }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 10px;
+            background: var(--glass-border-color);
+            border-radius: 5px;
+            outline: none;
+            opacity: 0.9;
+            transition: opacity .2s;
+            box-shadow: 0 1px 5px var(--glass-shadow-color) inset;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--color-primary-light), var(--color-accent-blue));
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3), 0 0 0 3px rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--color-primary-light), var(--color-accent-blue));
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3), 0 0 0 3px rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .blur-value {
+            text-align: right;
+            font-size: 0.9em;
+            color: #666;
+            margin-top: -10px; /* Приподнять, чтобы было ближе к слайдеру */
+        }
+
+        /* Стили для "стеклянных" кнопок */
+        .glass-button {
+            background: linear-gradient(135deg, var(--color-accent-blue) 0%, var(--color-accent-green) 100%);
+            color: var(--color-text-light);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(255, 255, 255, 0.5) inset;
+            transition: all 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            outline: none;
+        }
+
+        .glass-button::before { /* Эффект блика на кнопке */
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -50%;
+            width: 0;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+            pointer-events: none;
+        }
+
+        .glass-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25), 0 1px 1px rgba(255, 255, 255, 0.7) inset;
+        }
+
+        .glass-button:hover::before {
+            left: 120%;
+            width: 100%;
+        }
+
+        .glass-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15), 0 1px 1px rgba(255, 255, 255, 0.4) inset;
+        }
+
+        .download-button {
+            background: linear-gradient(135deg, #FF6B6B 0%, #FFD93D 100%); /* Яркий акцент для кнопки скачать */
+            margin-top: 10px;
+        }
+        .download-button:hover {
+             background: linear-gradient(135deg, #FF4C4C 0%, #FFC107 100%);
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #666;
+            padding: 15px;
+        }
+        .footer p { margin: 0; }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .main-content {
+                flex-direction: column;
+            }
+            .wallpaper-display, .controls-panel {
+                flex: none; /* Отключаем flex-grow */
+                width: 100%; /* Занимают всю ширину */
+            }
+            .logo { font-size: 2.5em; }
+            .tagline { font-size: 1em; }
+            .controls-panel h2 { font-size: 1.5em; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Анимированные пузырьки на фоне -->
+    <div class="bubble bubble-1"></div>
+    <div class="bubble bubble-2"></div>
+    <div class="bubble bubble-3"></div>
+    <div class="bubble bubble-4"></div>
+    <div class="bubble bubble-5"></div>
+
+    <div class="container">
+        <header class="glass-panel header">
+            <h1 class="logo">AquaScape Design</h1>
+            <p class="tagline">Ваш генератор фонов в стиле Frutiger Aero</p>
+        </header>
+
+        <main class="main-content">
+            <div id="generated-wallpaper" class="wallpaper-display">
+                Настройте градиент и получите свой уникальный фон!
+                <span class="watermark">Liquid Vista &copy; 2023</span>
+            </div>
+
+            <div class="controls-panel glass-panel">
+                <h2>Настройте ваш AquaScape</h2>
+                
+                <div class="control-group">
+                    <label for="color1">Начальный цвет градиента:</label>
+                    <input type="color" id="color1" value="#6dd5ed">
+                </div>
+                
+                <div class="control-group">
+                    <label for="color2">Конечный цвет градиента:</label>
+                    <input type="color" id="color2" value="#2193b0">
+                </div>
+
+                <div class="control-group">
+                    <label for="direction">Направление градиента:</label>
+                    <select id="direction" class="glass-button" style="background: var(--glass-bg-color); color: #333; text-shadow: none; box-shadow: none; border: 1px solid var(--glass-border-color);">
+                        <option value="0deg">0° (Вверх)</option>
+                        <option value="45deg">45° (Вверх-вправо)</option>
+                        <option value="90deg">90° (Вправо)</option>
+                        <option value="135deg" selected>135° (Вниз-вправо)</option>
+                        <option value="180deg">180° (Вниз)</option>
+                        <option value="225deg">225° (Вниз-влево)</option>
+                        <option value="270deg">270° (Влево)</option>
+                        <option value="315deg">315° (Вверх-влево)</option>
+                    </select>
+                </div>
+                
+                <button id="generate-btn" class="glass-button">Сгенерировать AquaScape</button>
+                <button id="download-btn" class="glass-button download-button">Скачать фон</button>
+            </div>
+        </main>
+
+        <footer class="glass-panel footer">
+            <p>Создано с любовью к Frutiger Aero. Привет из 2007 года! &#128522;</p>
+        </footer>
+    </div>
+
+    <script>
+        const color1Input = document.getElementById('color1');
+        const color2Input = document.getElementById('color2');
+        const directionSelect = document.getElementById('direction');
+        const generateBtn = document.getElementById('generate-btn');
+        const downloadBtn = document.getElementById('download-btn');
+        const wallpaperDisplay = document.getElementById('generated-wallpaper');
+
+        function updateWallpaper() {
+            const color1 = color1Input.value;
+            const color2 = color2Input.value;
+            const direction = directionSelect.value;
+            wallpaperDisplay.style.background = `linear-gradient(${direction}, ${color1} 0%, ${color2} 100%)`;
+        }
+
+        // Инициализация при загрузке страницы
+        updateWallpaper();
+
+        // Обработчики событий
+        color1Input.addEventListener('input', updateWallpaper);
+        color2Input.addEventListener('input', updateWallpaper);
+        directionSelect.addEventListener('change', updateWallpaper);
+        generateBtn.addEventListener('click', updateWallpaper);
+
+        downloadBtn.addEventListener('click', () => {
+            alert('Функция скачивания пока не реализована в этой простой версии, но вы можете сделать скриншот! :)');
+            // Для реального скачивания изображения, вам понадобится использовать Canvas API
+            // или библиотеку вроде html2canvas, что сложнее для "простого" HTML/JS.
+        });
+    </script>
+</body>
+</html>

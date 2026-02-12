@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Конструктор Резюме</title>
+    <style>
+        * { margin: 0; padding: 0; }
+        
+        body {
+            background-color: white;
+            color: #000;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        
+        /* ПАНЕЛЬ ЦВЕТА ФОНА */
+        .color-panel {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(204, 0, 0, 0.9);
+            padding: 10px;
+            border: 2px outset #990000;
+            z-index: 1000;
+        }
+        
+        .color-btn {
+            width: 30px;
+            height: 30px;
+            border: 2px outset #999;
+            cursor: pointer;
+            margin: 2px;
+        }
+        
+        .white-bg { background: white; }
+        .light-bg { background: #f0f0f0; }
+        .blue-bg { background: #e6f2ff; }
+        .yellow-bg { background: #ffffe6; }
+        
+        /* КНОПКА ДОМОЙ В СТИЛЕ WEB 1.0 */
+        .home-btn {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background: #cc0000;
+            color: white;
+            padding: 8px 15px;
+            text-decoration: none;
+            font-size: 14px;
+            border: 2px outset #990000;
+            font-family: "Courier New", monospace;
+            font-weight: bold;
+            z-index: 1000;
+        }
+        
+        .home-btn:active {
+            border-style: inset;
+        }
+        
+        /* ВЕРСИИ */
+        .version-switcher {
+            position: fixed;
+            top: 50px;
+            right: 10px;
+            z-index: 1000;
+        }
+        
+        .version-btn {
+            background: #cc0000;
+            color: white;
+            border: 2px outset #990000;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-left: 5px;
+            font-family: "Courier New", monospace;
+        }
+        
+        .version-btn:active {
+            border-style: inset;
+        }
+        
+        /* БЛОК КОНТАКТА РАЗРАБОТЧИКА */
+        .developer-contact {
+            text-align: center;
+            margin: 10px 0 30px 0;
+            padding: 10px;
+            background: rgba(204, 0, 0, 0.1);
+            border: 1px dotted #cc0000;
+            font-size: 14px;
+        }
+        
+        .developer-contact a {
+            color: #cc0000;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        .developer-contact a:hover {
+            text-decoration: underline;
+        }
+        
+        /* ОСНОВНЫЕ СТРАНИЦЫ */
+        .page {
+            display: none;
+            max-width: 900px;
+            margin: 20px auto;
+            background: rgba(204, 0, 0, 0.9);
+            padding: 20px;
+            border: 3px outset #990000;
+            color: white;
+        }
+        
+        .active-page { display: block; }
+        
+        /* ЗАГОЛОВОК */
+        .main-title {
+            text-align: center;
+            font-size: 28px;
+            margin: 20px 0;
+            color: white;
+            text-shadow: 2px 2px 0 #990000;
+        }
+        
+        /* КНОПКА СОЗДАНИЯ В СТИЛЕ WEB 1.0 */
+        .create-btn {
+            display: block;
+            width: 350px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #cc0000;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            border: 4px outset #990000;
+            text-align: center;
+            cursor: pointer;
+            font-family: "Courier New", monospace;
+            text-transform: uppercase;
+        }
+        
+        .create-btn:active {
+            border-style: inset;
+        }
+        
+        /* ФОРМЫ */
+        .form-section {
+            background: rgba(255, 255, 255, 0.1);
+            margin: 15px 0;
+            padding: 15px;
+            border: 2px inset #ff6666;
+        }
+        
+        .form-title {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: white;
+            text-align: center;
+            border-bottom: 2px dotted white;
+            padding-bottom: 5px;
+        }
+        
+        label {
+            display: block;
+            color: white;
+            margin: 10px 0 5px 0;
+            font-weight: bold;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 8px;
+            border: 2px inset #999;
+            background: white;
+            font-family: "Courier New", monospace;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        
+        /* ВЫБОР ТИПА РЕЗЮМЕ */
+        .resume-type {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        
+        .type-option {
+            padding: 20px;
+            cursor: pointer;
+            text-align: center;
+            width: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 3px outset #ff6666;
+            color: white;
+        }
+        
+        .type-option:active {
+            border-style: inset;
+        }
+        
+        .type-option h3 {
+            color: white;
+            margin-bottom: 10px;
+        }
+        
+        .type-option.selected {
+            background: rgba(255, 0, 0, 0.3);
+            border-color: white;
+        }
+        
+        /* КНОПКИ ДЕЙСТВИЙ */
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .action-btn {
+            padding: 12px 30px;
+            background: #cc0000;
+            color: white;
+            border: 3px outset #990000;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: "Courier New", monospace;
+            font-weight: bold;
+        }
+        
+        .action-btn:active {
+            border-style: inset;
+        }
+        
+        /* ФОТОГРАФИЯ */
+        .photo-upload {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .photo-preview {
+            width: 150px;
+            height: 200px;
+            margin: 10px auto;
+            border: 3px outset #990000;
+            background: white;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .photo-preview img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
+        /* ПРЕДПРОСМОТР РЕЗЮМЕ */
+        .preview {
+            margin: 30px 0;
+            padding: 20px;
+            min-height: 200px;
+            background: white;
+            border: 3px inset #999;
+            color: black;
+            font-family: "Courier New", monospace;
+            white-space: pre-line;
+            overflow: auto;
+        }
+        
+        /* МОДАЛЬНОЕ ОКНО */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+        }
+        
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(204, 0, 0, 0.95);
+            padding: 30px;
+            width: 400px;
+            border: 4px outset #990000;
+            color: white;
+        }
+        
+        /* ТЕКСТ ПРИ НАВЕДЕНИИ */
+        .hover-text {
+            display: none;
+            position: absolute;
+            background: yellow;
+            color: black;
+            border: 2px outset #999;
+            padding: 5px 10px;
+            font-size: 12px;
+            white-space: nowrap;
+            margin-top: 5px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .action-btn:hover .hover-text {
+            display: block;
+        }
+        
+        /* ПОДВАЛ */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px dotted white;
+            color: white;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- ПАНЕЛЬ ВЫБОРА ФОНА -->
+    <div class="color-panel">
+        <div>Фон:</div>
+        <button class="color-btn white-bg" onclick="changeBgColor('white')"></button>
+        <button class="color-btn light-bg" onclick="changeBgColor('#f0f0f0')"></button>
+        <button class="color-btn blue-bg" onclick="changeBgColor('#e6f2ff')"></button>
+        <button class="color-btn yellow-bg" onclick="changeBgColor('#ffffe6')"></button>
+    </div>
+    
+    <!-- ПЕРЕКЛЮЧАТЕЛЬ ВЕРСИЙ -->
+    <div class="version-switcher">
+        <button class="version-btn" onclick="switchVersion('old')">1</button>
+        <button class="version-btn" onclick="switchVersion('new')">2</button>
+    </div>
+    
+    <!-- КНОПКА ДОМОЙ -->
+    <a href="#" class="home-btn" id="homeBtn">Домой</a>
+    
+    <!-- КОНТАКТ РАЗРАБОТЧИКА -->
+    <div class="developer-contact">
+        Разработчик: <a href="mailto:rozkovz276@gmail.com">rozkovz276@gmail.com</a>
+    </div>
+    
+    <!-- ГЛАВНАЯ СТРАНИЦА -->
+    <div id="main-page" class="page active-page">
+        <h1 class="main-title">Конструктор Резюме</h1>
+        
+        <div style="text-align: center; margin: 20px 0; padding: 15px; background: rgba(255,255,255,0.1); border: 2px inset #ff6666;">
+            Мы в разделе резюме TUT
+        </div>
+        
+        <button class="create-btn" onclick="showPage('type-page')">
+            *Создать своё резюме*
+        </button>
+        
+        <div class="footer">
+            Конструктор tut.w10.site (TUT.BY)<br>
+            2025-2026
+        </div>
+    </div>
+    
+    <!-- ВЫБОР ТИПА РЕЗЮМЕ -->
+    <div id="type-page" class="page">
+        <h2 class="form-title">Выберите тип резюме</h2>
+        
+        <div class="resume-type">
+            <div class="type-option" onclick="selectType('work')" id="work-option">
+                <h3>Для работы и своего дела</h3>
+                <p>Полное резюме с образованием и опытом работы</p>
+            </div>
+            
+            <div class="type-option" onclick="selectType('personal')" id="personal-option">
+                <h3>Лично для себя</h3>
+                <p>Без раздела об образовании</p>
+            </div>
+        </div>
+        
+        <div class="action-buttons">
+            <button class="action-btn" onclick="showPage('main-page')">Назад</button>
+            <button class="action-btn" onclick="startResumeCreation()">Далее</button>
+        </div>
+    </div>
+    
+    <!-- ФОРМА ДЛЯ ЛИЧНОГО РЕЗЮМЕ -->
+    <div id="personal-form-page" class="page">
+        <h2 class="form-title">Лично для себя</h2>
+        
+        <!-- ФОТО -->
+        <div class="photo-upload">
+            <input type="file" id="personal-photo" accept="image/*" onchange="previewPhoto('personal')" style="display: none;">
+            <button class="action-btn" onclick="document.getElementById('personal-photo').click()">Добавить фотографию</button>
+            <div id="personal-photo-preview" class="photo-preview">
+                <span style="color: #666;">Фото не выбрано</span>
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <h3>Основная информация</h3>
+            <label>Имя:</label>
+            <input type="text" id="p-name" required>
+            
+            <label>Фамилия:</label>
+            <input type="text" id="p-surname" required>
+            
+            <label>Мобильный телефон:</label>
+            <input type="tel" id="p-phone" required>
+            
+            <label>Домашний телефон:</label>
+            <input type="tel" id="p-home-phone">
+        </div>
+        
+        <div class="form-section">
+            <h3>Адрес</h3>
+            <label>Домашний адрес:</label>
+            <input type="text" id="p-address" required>
+            
+            <label>Почтовый индекс:</label>
+            <input type="text" id="p-zip" required>
+        </div>
+        
+        <div class="form-section">
+            <h3>Дополнительно</h3>
+            <label>О себе:</label>
+            <textarea id="p-about"></textarea>
+        </div>
+        
+        <div class="action-buttons">
+            <button class="action-btn" onclick="showPage('type-page')">Назад</button>
+            <button class="action-btn" onclick="generateResume('personal')">Создать резюме</button>
+        </div>
+    </div>
+    
+    <!-- ФОРМА ДЛЯ РАБОЧЕГО РЕЗЮМЕ -->
+    <div id="work-form-page" class="page">
+        <h2 class="form-title">Для работы</h2>
+        
+        <!-- ФОТО -->
+        <div class="photo-upload">
+            <input type="file" id="work-photo" accept="image/*" onchange="previewPhoto('work')" style="display: none;">
+            <button class="action-btn" onclick="document.getElementById('work-photo').click()">Добавить фотографию</button>
+            <div id="work-photo-preview" class="photo-preview">
+                <span style="color: #666;">Фото не выбрано</span>
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <h3>Личная информация</h3>
+            <label>Имя:</label>
+            <input type="text" id="w-name" required>
+            
+            <label>Фамилия:</label>
+            <input type="text" id="w-surname" required>
+            
+            <label>Мобильный телефон:</label>
+            <input type="tel" id="w-phone" required>
+            
+            <label>Email:</label>
+            <input type="email" id="w-email" required>
+            
+            <label>Адрес:</label>
+            <input type="text" id="w-address" required>
+        </div>
+        
+        <div class="form-section">
+            <h3>Образование</h3>
+            <label>Учебное заведение:</label>
+            <input type="text" id="w-education" required>
+            
+            <label>Специальность:</label>
+            <input type="text" id="w-degree" required>
+            
+            <label>Год окончания:</label>
+            <input type="text" id="w-graduation" required>
+        </div>
+        
+        <div class="form-section">
+            <h3>Опыт работы</h3>
+            <label>Опыт работы:</label>
+            <textarea id="w-experience" required></textarea>
+        </div>
+        
+        <div class="form-section">
+            <h3>Навыки</h3>
+            <label>Профессиональные навыки:</label>
+            <textarea id="w-skills" required></textarea>
+        </div>
+        
+        <div class="action-buttons">
+            <button class="action-btn" onclick="showPage('type-page')">Назад</button>
+            <button class="action-btn" onclick="generateResume('work')">Создать резюме</button>
+        </div>
+    </div>
+    
+    <!-- РЕЗУЛЬТАТ -->
+    <div id="result-page" class="page">
+        <h2 class="form-title">Ваше резюме готово!</h2>
+        
+        <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.1); margin: 20px 0; border: 2px inset #ff6666;">
+            Резюме успешно создано. Вы можете скачать его в нужном формате.
+        </div>
+        
+        <div id="resume-preview" class="preview">
+            <!-- Здесь появится резюме -->
+        </div>
+        
+        <div class="action-buttons">
+            <button class="action-btn" onclick="showPage('type-page')">Назад</button>
+            <button class="action-btn" onclick="showDownloadModal()" id="download-btn">
+                Скачать
+                <span class="hover-text">Пошли на главную!</span>
+            </button>
+        </div>
+        
+        <div class="footer">
+            Конструктор tut.w10.site (TUT.BY)<br>
+            2025-2026
+        </div>
+    </div>
+    
+    <!-- МОДАЛЬНОЕ ОКНО СКАЧИВАНИЯ -->
+    <div id="download-modal" class="modal">
+        <div class="modal-content">
+            <h2 style="text-align: center; margin-bottom: 20px; color: white;">Выберите формат</h2>
+            
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
+                <button class="action-btn" onclick="downloadResume('html')">HTML файл</button>
+                <button class="action-btn" onclick="downloadResume('htm')">HTM файл</button>
+                <button class="action-btn" onclick="downloadResume('txt')">Текстовый файл</button>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="action-btn" onclick="hideDownloadModal()">Отмена</button>
+                <button class="action-btn" onclick="goToMainPage()">Готово!</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // ДАННЫЕ
+        let currentResumeType = '';
+        let resumeData = {};
+        let currentVersion = 'old';
+        
+        // СМЕНА ЦВЕТА ФОНА
+        function changeBgColor(color) {
+            document.body.style.backgroundColor = color;
+        }
+        
+        // ПЕРЕКЛЮЧЕНИЕ ВЕРСИЙ
+        function switchVersion(version) {
+            currentVersion = version;
+            if (version === 'new') {
+                // Красивая версия
+                document.querySelectorAll('.page').forEach(page => {
+                    page.style.background = 'linear-gradient(135deg, rgba(204,0,0,0.9), rgba(153,0,0,0.9))';
+                    page.style.boxShadow = '0 10px 30px rgba(0,0,0,0.3)';
+                });
+                document.querySelectorAll('.action-btn, .create-btn, .version-btn').forEach(btn => {
+                    btn.style.background = 'linear-gradient(to bottom, #cc0000, #990000)';
+                });
+            } else {
+                // Старая версия
+                document.querySelectorAll('.page').forEach(page => {
+                    page.style.background = 'rgba(204, 0, 0, 0.9)';
+                    page.style.boxShadow = 'none';
+                });
+                document.querySelectorAll('.action-btn, .create-btn, .version-btn').forEach(btn => {
+                    btn.style.background = '#cc0000';
+                });
+            }
+        }
+        
+        // НАВИГАЦИЯ
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active-page');
+            });
+            document.getElementById(pageId).classList.add('active-page');
+        }
+        
+        // ВЫБОР ТИПА
+        function selectType(type) {
+            currentResumeType = type;
+            document.querySelectorAll('.type-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            document.getElementById(`${type}-option`).classList.add('selected');
+        }
+        
+        // НАЧАТЬ СОЗДАНИЕ
+        function startResumeCreation() {
+            if (!currentResumeType) {
+                alert('Выберите тип резюме');
+                return;
+            }
+            showPage(currentResumeType + '-form-page');
+        }
+        
+        // ПРЕДПРОСМОТР ФОТО
+        function previewPhoto(type) {
+            const input = document.getElementById(`${type}-photo`);
+            const preview = document.getElementById(`${type}-photo-preview`);
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" alt="Фото">`;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        
+        // ГЕНЕРАЦИЯ РЕЗЮМЕ
+        function generateResume(type) {
+            // ПРОВЕРКА ОБЯЗАТЕЛЬНЫХ ПОЛЕЙ
+            let isValid = true;
+            let message = '';
+            
+            if (type === 'personal') {
+                const fields = [
+                    {id: 'p-name', name: 'Имя'},
+                    {id: 'p-surname', name: 'Фамилия'},
+                    {id: 'p-phone', name: 'Телефон'},
+                    {id: 'p-address', name: 'Адрес'},
+                    {id: 'p-zip', name: 'Индекс'}
+                ];
+                
+                for (let field of fields) {
+                    if (!document.getElementById(field.id).value.trim()) {
+                        message += `Заполните поле: ${field.name}\n`;
+                        isValid = false;
+                    }
+                }
+            } else {
+                const fields = [
+                    {id: 'w-name', name: 'Имя'},
+                    {id: 'w-surname', name: 'Фамилия'},
+                    {id: 'w-phone', name: 'Телефон'},
+                    {id: 'w-email', name: 'Email'},
+                    {id: 'w-address', name: 'Адрес'},
+                    {id: 'w-education', name: 'Образование'},
+                    {id: 'w-degree', name: 'Специальность'},
+                    {id: 'w-graduation', name: 'Год окончания'},
+                    {id: 'w-experience', name: 'Опыт работы'},
+                    {id: 'w-skills', name: 'Навыки'}
+                ];
+                
+                for (let field of fields) {
+                    if (!document.getElementById(field.id).value.trim()) {
+                        message += `Заполните поле: ${field.name}\n`;
+                        isValid = false;
+                    }
+                }
+            }
+            
+            if (!isValid) {
+                alert(message);
+                return;
+            }
+            
+            // СОХРАНЕНИЕ ДАННЫХ
+            if (type === 'personal') {
+                resumeData = {
+                    type: 'personal',
+                    name: document.getElementById('p-name').value,
+                    surname: document.getElementById('p-surname').value,
+                    phone: document.getElementById('p-phone').value,
+                    homePhone: document.getElementById('p-home-phone').value,
+                    address: document.getElementById('p-address').value,
+                    zip: document.getElementById('p-zip').value,
+                    about: document.getElementById('p-about').value,
+                    date: new Date().toLocaleDateString('ru-RU'),
+                    photo: document.getElementById('personal-photo-preview').querySelector('img')?.src || null
+                };
+            } else {
+                resumeData = {
+                    type: 'work',
+                    name: document.getElementById('w-name').value,
+                    surname: document.getElementById('w-surname').value,
+                    phone: document.getElementById('w-phone').value,
+                    email: document.getElementById('w-email').value,
+                    address: document.getElementById('w-address').value,
+                    education: document.getElementById('w-education').value,
+                    degree: document.getElementById('w-degree').value,
+                    graduation: document.getElementById('w-graduation').value,
+                    experience: document.getElementById('w-experience').value,
+                    skills: document.getElementById('w-skills').value,
+                    date: new Date().toLocaleDateString('ru-RU'),
+                    photo: document.getElementById('work-photo-preview').querySelector('img')?.src || null
+                };
+            }
+            
+            // ГЕНЕРАЦИЯ ПРЕДПРОСМОТРА
+            generatePreview();
+            showPage('result-page');
+        }
+        
+        // ГЕНЕРАЦИЯ ПРЕДПРОСМОТРА
+        function generatePreview() {
+            const preview = document.getElementById('resume-preview');
+            let content = '';
+            
+            if (resumeData.type === 'personal') {
+                content = `
+╔═══════════════════════════════════════════╗
+║                Р Е З Ю М Е                ║
+╚═══════════════════════════════════════════╝
+
+▬▬▬▬▬▬▬▬▬▬ ЛИЧНЫЕ ДАННЫЕ ▬▬▬▬▬▬▬▬▬▬
+
+${resumeData.name} ${resumeData.surname}
+
+Телефон: ${resumeData.phone}
+${resumeData.homePhone ? `Домашний телефон: ${resumeData.homePhone}` : ''}
+
+Адрес: ${resumeData.address}
+Почтовый индекс: ${resumeData.zip}
+
+${resumeData.about ? `\n▬▬▬▬▬▬▬▬▬▬ О СЕБЕ ▬▬▬▬▬▬▬▬▬▬\n\n${resumeData.about}` : ''}
+
+────────────────────────────────────
+Дата создания: ${resumeData.date}
+                `;
+            } else {
+                content = `
+╔═══════════════════════════════════════════╗
+║      П Р О Ф Е С С И О Н А Л Ь Н О Е      ║
+║                Р Е З Ю М Е                ║
+╚═══════════════════════════════════════════╝
+
+▬▬▬▬▬▬▬▬▬▬ КАНДИДАТ ▬▬▬▬▬▬▬▬▬▬
+
+${resumeData.name} ${resumeData.surname}
+
+▬▬▬▬▬▬▬▬▬▬ КОНТАКТЫ ▬▬▬▬▬▬▬▬▬▬
+
+Телефон: ${resumeData.phone}
+Email: ${resumeData.email}
+Адрес: ${resumeData.address}
+
+▬▬▬▬▬▬▬▬▬▬ ОБРАЗОВАНИЕ ▬▬▬▬▬▬▬▬▬▬
+
+${resumeData.education}
+${resumeData.degree}
+Год окончания: ${resumeData.graduation}
+
+▬▬▬▬▬▬▬▬▬▬ ОПЫТ РАБОТЫ ▬▬▬▬▬▬▬▬▬▬
+
+${resumeData.experience}
+
+▬▬▬▬▬▬▬▬▬▬ НАВЫКИ ▬▬▬▬▬▬▬▬▬▬
+
+${resumeData.skills}
+
+────────────────────────────────────
+Дата создания: ${resumeData.date}
+                `;
+            }
+            
+            // ДОБАВЛЯЕМ ФОТО ЕСЛИ ЕСТЬ
+            if (resumeData.photo) {
+                content = '[ФОТОГРАФИЯ ПРИЛОЖЕНА]\n\n' + content;
+            }
+            
+            preview.textContent = content;
+        }
+        
+        // МОДАЛЬНОЕ ОКНО
+        function showDownloadModal() {
+            document.getElementById('download-modal').style.display = 'block';
+        }
+        
+        function hideDownloadModal() {
+            document.getElementById('download-modal').style.display = 'none';
+        }
+        
+        // СКАЧИВАНИЕ
+        function downloadResume(format) {
+            let content = document.getElementById('resume-preview').textContent;
+            let filename = `resume_${resumeData.name}_${resumeData.surname}`;
+            let mimeType = 'text/plain';
+            
+            if (format === 'html' || format === 'htm') {
+                let htmlContent = `
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Резюме ${resumeData.name} ${resumeData.surname}</title>
+    <style>
+        body { 
+            font-family: "Courier New", monospace;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: ${document.body.style.backgroundColor || 'white'};
+        }
+        .resume-container {
+            background: rgba(204, 0, 0, 0.9);
+            color: white;
+            padding: 30px;
+            border: 4px outset #990000;
+        }
+        h1 { 
+            text-align: center; 
+            text-shadow: 2px 2px 0 #990000;
+            margin-bottom: 30px;
+        }
+        .photo { 
+            text-align: center; 
+            margin: 20px 0; 
+        }
+        .photo img {
+            max-width: 150px;
+            border: 3px outset #990000;
+        }
+        pre {
+            white-space: pre-line;
+            font-family: "Courier New", monospace;
+            line-height: 1.6;
+        }
+        .footer { 
+            text-align: center; 
+            margin-top: 40px; 
+            padding-top: 20px; 
+            border-top: 2px dotted white;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="resume-container">
+        <h1>Резюме</h1>
+        
+        ${resumeData.photo ? `
+        <div class="photo">
+            <img src="${resumeData.photo}" alt="Фотография">
+        </div>
+        ` : ''}
+        
+        <pre>${content}</pre>
+        
+        <div class="footer">
+            Создано с помощью Конструктора резюме tut.w10.site (TUT.BY)<br>
+            ${new Date().getFullYear()}-${new Date().getFullYear()+1}<br>
+            Разработчик: rozkovz276@gmail.com
+        </div>
+    </div>
+</body>
+</html>`;
+                
+                content = htmlContent;
+                filename += `.${format}`;
+                mimeType = 'text/html';
+            } else {
+                filename += '.txt';
+            }
+            
+            // СКАЧИВАНИЕ
+            const blob = new Blob([content], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            hideDownloadModal();
+        }
+        
+        // НА ГЛАВНУЮ
+        function goToMainPage() {
+            hideDownloadModal();
+            showPage('main-page');
+            // СБРОС
+            document.getElementById('personal-form-page').querySelectorAll('input, textarea').forEach(el => el.value = '');
+            document.getElementById('work-form-page').querySelectorAll('input, textarea').forEach(el => el.value = '');
+            document.getElementById('personal-photo-preview').innerHTML = '<span style="color: #666;">Фото не выбрано</span>';
+            document.getElementById('work-photo-preview').innerHTML = '<span style="color: #666;">Фото не выбрано</span>';
+            document.getElementById('resume-preview').textContent = '';
+            resumeData = {};
+        }
+        
+        // ИНИЦИАЛИЗАЦИЯ
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('homeBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                goToMainPage();
+            });
+            selectType('work');
+        });
+    </script>
+</body>
+</html>

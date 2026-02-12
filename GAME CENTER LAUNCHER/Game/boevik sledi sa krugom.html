@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>GAME CENTER LAUNCHER ONLINE</title>
+    <style>
+        :root {
+            --glass: rgba(255, 255, 255, 0.1);
+            --border: rgba(255, 255, 255, 0.2);
+            --accent: #00d4ff;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Segoe UI', sans-serif;
+            background: #020a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        /* Анимированный фон */
+        .bg-blobs {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            filter: blur(80px);
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            animation: move 20s infinite alternate;
+        }
+
+        .blob1 { width: 400px; height: 400px; background: #0044ff; top: -10%; left: -10%; }
+        .blob2 { width: 500px; height: 500px; background: #00d4ff; bottom: -20%; right: -10%; animation-duration: 25s; }
+        .blob3 { width: 300px; height: 300px; background: #6a00ff; top: 40%; left: 30%; animation-duration: 15s; }
+
+        @keyframes move {
+            from { transform: translate(0, 0) scale(1); }
+            to { transform: translate(100px, 100px) scale(1.2); }
+        }
+
+        /* Стеклянный контейнер */
+        .glass-panel {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+            width: 800px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 { font-size: 2rem; letter-spacing: 2px; margin-bottom: 20px; text-transform: uppercase; }
+
+        /* Мини-игра (Боевичок/Тир) */
+        #game-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: crosshair;
+            border: 1px solid var(--border);
+        }
+
+        .enemy {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: #ff4b2b;
+            border-radius: 50%;
+            box-shadow: 0 0 15px #ff4b2b;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .score { font-size: 1.5rem; margin-top: 15px; color: var(--accent); }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: var(--accent);
+            border: none;
+            border-radius: 8px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover { transform: scale(1.05); box-shadow: 0 0 20px var(--accent); }
+    </style>
+</head>
+<body>
+
+    <div class="bg-blobs">
+        <div class="blob blob1"></div>
+        <div class="blob blob2"></div>
+        <div class="blob blob3"></div>
+    </div>
+
+    <div class="glass-panel">
+        <h1>Game Center Launcher</h1>
+        <p>ПРИСТУПИТЬ К ТРЕНИРОВКЕ (МИНИ-ТИР)</p>
+        
+        <div id="game-container">
+            <!-- Сюда будут спавниться враги -->
+        </div>
+
+        <div class="score">Счет: <span id="score-val">0</span></div>
+        <button onclick="startGame()">НАЧАТЬ ИГРУ</button>
+    </div>
+
+    <script>
+        const container = document.getElementById('game-container');
+        const scoreDisplay = document.getElementById('score-val');
+        let score = 0;
+        let gameActive = false;
+
+        function startGame() {
+            if (gameActive) return;
+            gameActive = true;
+            score = 0;
+            scoreDisplay.innerText = score;
+            spawnEnemy();
+            setTimeout(() => {
+                gameActive = false;
+                alert('Время вышло! Ваш счет: ' + score);
+                container.innerHTML = '';
+            }, 15000);
+        }
+
+        function spawnEnemy() {
+            if (!gameActive) return;
+            const enemy = document.createElement('div');
+            enemy.className = 'enemy';
+            
+            const x = Math.random() * (container.offsetWidth - 50);
+            const y = Math.random() * (container.offsetHeight - 50);
+            
+            enemy.style.left = x + 'px';
+            enemy.style.top = y + 'px';
+
+            enemy.onclick = (e) => {
+                e.stopPropagation();
+                score++;
+                scoreDisplay.innerText = score;
+                enemy.remove();
+                spawnEnemy();
+            };
+
+            container.appendChild(enemy);
+
+            // Враг исчезает, если не успел нажать
+            setTimeout(() => {
+                if (enemy.parentNode) {
+                    enemy.remove();
+                    spawnEnemy();
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

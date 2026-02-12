@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Результаты поиска - OldGoogle</title>
+    <style>
+        body { margin: 0; padding: 0; font-family: Arial, sans-serif; background: #fff; min-height: 100vh; }
+
+        /* --- ШАПКА --- */
+        .header-main { display: flex; align-items: center; padding: 15px 20px; background: #f2f2f2; border-bottom: 1px solid #ccc; height: 50px; }
+        .logo-small { 
+            width: 90px; height: 30px; margin-right: 20px; 
+            background: url('https://faero.xyz/static/oldgoogle.png') no-repeat left/contain; 
+            cursor: pointer; 
+        }
+        
+        .my-search-form { display: flex; flex-grow: 1; max-width: 600px; }
+        .my-input { flex-grow: 1; padding: 6px 10px; font-size: 16px; border: 1px solid #ccc; height: 30px; box-sizing: border-box; }
+        .my-input:focus { border-color: #4d90fe; outline: none; }
+        .my-btn { 
+            padding: 0 15px; background: #4d90fe; color: white; border: 1px solid #4d90fe; 
+            cursor: pointer; font-weight: bold; height: 30px; font-size: 13px;
+        }
+
+        /* --- КОНТЕЙНЕР РЕЗУЛЬТАТОВ --- */
+        .results-wrapper { 
+            max-width: 1000px; 
+            margin-left: 130px; /* Отступ слева */
+            padding-top: 20px; 
+        }
+
+        /* Стилизация ссылок результатов под старый стиль */
+        .gs-title a { text-decoration: underline !important; color: #1a0dab !important; font-size: 18px !important; }
+        .gs-visibleUrl { color: #006621 !important; font-size: 14px !important; }
+        .gs-snippet { font-size: 14px !important; color: #545454 !important; }
+        
+        /* Убираем лишние отступы от Google */
+        .gsc-control-cse { padding: 0 !important; margin: 0 !important; }
+
+    </style>
+</head>
+<body>
+
+    <div class="header-main">
+        <a href="index.html"><div class="logo-small"></div></a>
+        
+        <form action="search.html" method="get" class="my-search-form">
+            <input type="text" name="q" id="header-input" class="my-input" autocomplete="off">
+            <button type="submit" class="my-btn">Search</button>
+        </form>
+    </div>
+
+    <div class="results-wrapper">
+        <div class="gcse-searchresults-only"></div>
+    </div>
+
+    <script async src="https://cse.google.com/cse.js?cx=b002bdd63a1e14655"></script>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        if (params.has('q')) {
+            document.getElementById('header-input').value = params.get('q');
+        }
+    </script>
+
+</body>
+</html>

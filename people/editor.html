@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Простой HTML Редактор</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        #editor {
+            border: 1px solid #ccc;
+            padding: 10px;
+            min-height: 300px;
+            width: 80%;
+            margin-top: 10px;
+            background-color: #f9f9f9;
+        }
+        .controls button { margin-right: 5px; padding: 5px 10px; }
+    </style>
+</head>
+<body>
+
+    <h1>Простой HTML Редактор</h1>
+
+    <div class="controls">
+        <button onclick="formatDoc('bold')">**B**</button>
+        <button onclick="formatDoc('italic')">_I_</button>
+        <button onclick="formatDoc('underline')"><u>U</u></button>
+        <button onclick="saveHtml()">Сохранить как HTML</button>
+    </div>
+
+    <!-- Область для редактирования -->
+    <div id="editor" contenteditable="true">
+        <p>Начните вводить ваш текст здесь. Вы можете использовать кнопки выше для форматирования.</p>
+    </div>
+
+    <script>
+        // Функция для применения форматирования
+        function formatDoc(command, value = null) {
+            document.execCommand(command, false, value);
+        }
+
+        // Функция для сохранения контента как HTML файла
+        function saveHtml() {
+            const content = document.getElementById('editor').innerHTML;
+            const blob = new Blob([content], { type: 'text/html' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'my_document.html'; // Имя файла по умолчанию
+            a.click();
+            URL.revokeObjectURL(a.href); // Очистка URL объекта
+        }
+    </script>
+
+</body>
+</html>

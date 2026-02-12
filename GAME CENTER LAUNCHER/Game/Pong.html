@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Понг</title>
+    <style>
+        body { background: #010409; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        canvas { background: #000; border: 2px solid #fff; }
+    </style>
+</head>
+<body>
+    <canvas id="game" width="600" height="400"></canvas>
+    <script>
+        const canvas = document.getElementById('game');
+        const ctx = canvas.getContext('2d');
+        const PADDLE_WIDTH = 10, PADDLE_HEIGHT = 100, BALL_SIZE = 10;
+        let playerY = 150, computerY = 150, ballX = 300, ballY = 200, ballDX = 4, ballDY = 4;
+        let playerScore = 0, computerScore = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            playerY = e.clientY - rect.top - PADDLE_HEIGHT / 2;
+        });
+
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // Компьютерный игрок
+            computerY += ((ballY - (computerY + PADDLE_HEIGHT / 2))) * 0.1;
+            // Движение мяча
+            ballX += ballDX; ballY += ballDY;
+            if (ballY < 0 || ballY > canvas.height - BALL_SIZE) ballDY *= -1;
+            // Столкновения с ракетками
+            if (ballX <= PADDLE_WIDTH && ballY + BALL_SIZE >= playerY && ballY <= playerY + PADDLE_HEIGHT) ballDX *= -1;
+            if (ballX >= canvas.width - PADDLE_WIDTH - BALL_SIZE && ballY + BALL_SIZE >= computerY && ballY <= computerY + PADDLE_HEIGHT) ballDX *= -1;
+            // Голы
+            if (ballX < 0) { computerScore++; ballX = 300; ballY = 200; }
+            if (ballX > canvas.width) { playerScore++; ballX = 300; ballY = 200; }
+
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(0, playerY, PADDLE_WIDTH, PADDLE_HEIGHT);
+            ctx.fillRect(canvas.width - PADDLE_WIDTH, computerY, PADDLE_WIDTH, PADDLE_HEIGHT);
+            ctx.fillRect(ballX, ballY, BALL_SIZE, BALL_SIZE);
+            ctx.fillText('Игрок: ' + playerScore, 100, 10);
+            ctx.fillText('Компьютер: ' + computerScore, 400, 10);
+            requestAnimationFrame(gameLoop);
+        }
+        gameLoop();
+    </script>
+</body>
+</html>

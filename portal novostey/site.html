@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>TAT.BY - Белорусский портал</title>
+    <style>
+        /* СТИЛИ (Дизайн 2003 года) */
+        body { background-color: #ffffff; font-family: Verdana, Arial, sans-serif; font-size: 11px; margin: 0; padding: 0; color: #000000; }
+        a { color: #5080b3db; text-decoration: underline; cursor: pointer; }
+        a:hover { color: #cc0000; }
+        .container { width: 980px; margin: 0 auto; background-color: #fff; min-height: 100vh; }
+        
+        /* Шапка */
+        .header { padding: 10px; border-bottom: 2px solid #98ff73; }
+        .logo { font-size: 36px; font-weight: bold; color: #3acc00; font-family: "Arial Black", sans-serif; text-decoration: none; }
+        .logo span { color: #1aabff; }
+        .slogan { font-size: 12px; color: #666; font-weight: normal; margin-left: 10px;}
+        
+       
+
+     /* Сетка */
+        .main-grid { display: flex; margin-top: 10px; }
+        .sidebar-left, .sidebar-right { width: 200px; padding: 5px; background-color: #f0f0f0; border-right: 1px solid #ccc; }
+        .content-center { flex-grow: 1; padding: 10px; }
+
+       
+
+        /* Элементы */
+        .news-item { margin-bottom: 15px; }
+        .news-date { color: #cc0000; font-weight: bold; }
+        .news-title { font-weight: bold; font-size: 13px; display: block; margin-bottom: 3px;}
+        
+       f; cursor: crosshair; }
+        
+        /* Скрытие страниц */
+        .page { display: none; }
+        .active-page { display: block; }
+
+        /* Files стиль */
+        .files-style { font-family: monospace; font-size: 14px; }
+        .file-row { padding: 5px 0; border-bottom: 1px solid #eee; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <a href="#" onclick="showPage('home')" class="logo">TAT<span>.BY</span></a>
+        <span class="slogan">Белорусский портал (версия 2003)</span>
+        
+        <form action="https://www.google.com/search" target="_blank" style="float:right; margin-top: 5px;">
+            <input type="text" name="q" placeholder="Google поиск..." style="border: 1px solid #999;">
+            <button>Найти</button>
+        </form>
+    </div>
+
+    <div class="nav-bar">
+        <a href="#" onclick="showPage('home')">ГЛАВНАЯ</a>
+        <a href="#" onclick="showPage('home')">НОВОСТИ</a>
+        <a href="#" onclick="showPage('iamtut')">I AM TUT</a>
+        <a href="#" onclick="showPage('friends')">FRIENDS</a>
+        <a href="#" onclick="showPage('files')">FILES</a>
+        <a href="#">ФОРУМЫ</a>
+    </div>
+
+    <div class="main-grid">
+        
+        <div class="sidebar-left">
+            <div class="menu-block">
+                <div class="menu-title">Ресурсы</div>
+                <div class="menu-items">
+                    <ul>
+                        <li><a href="#" onclick="showPage('iamtut')">Погода и Курсы</a></li>
+                        <li><a href="#" onclick="showPage('iamtut')">Paint Online</a></li>
+                        <li><a href="#" onclick="showPage('friends')">Знакомства</a></li>
+                        <li><a href="#">Каталог сайтов</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="menu-block">
+                <div class="menu-title">Реклама</div>
+                <div style="padding:10px; text-align:center;">
+                    <div style="width:100%; height:100px; background:#ccc; border:1px solid #000; display:flex; align-items:center; justify-content:center;">БАННЕР</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-center">
+            
+            <div id="home" class="page active-page">
+                <h2 style="color: #cc0000; border-bottom: 1px solid #ccc;">ГЛАВНЫЕ НОВОСТИ</h2>
+                <div class="news-item">
+                    <span class="news-date">20.01.2003</span>
+                    <a href="#" class="news-title">ЛУКАШЕНКО СТАНЕТ ГЕРОЕМ НОВОЙ ПЕРЕДАЧИ</a>
+                    <p>Эфир центральных каналов пополнится новой программой "Утренний разговор".</p>
+                </div>
+                <div class="news-item">
+                    <span class="news-date">19.01.2003</span>
+                    <a href="#" class="news-title">В МИНСКЕ ОТКРЫЛСЯ НОВЫЙ КОМПЬЮТЕРНЫЙ КЛУБ</a>
+                    <p>Скорость интернета достигает 128 кбит/с! Час игры — 2000 рублей.</p>
+                </div>
+                <div class="news-item">
+                    <span class="news-date">18.01.2003</span>
+                    <a href="#" class="news-title">NOKIA ВЫПУСТИЛА НОВУЮ МОДЕЛЬ 3310</a>
+                    <p>Этот телефон невозможно сломать.</p>
+                </div>
+            </div>
+
+            <div id="iamtut" class="page">
+                <h2 style="color: #003366;">I AM TUT: Сервисы</h2>
+                
+                <div style="display:flex; gap:10px; margin-bottom:20px;">
+                    <div class="menu-block" style="flex:1;">
+                        <div class="menu-title">Погода</div>
+                        <div style="padding:10px; text-align:center;">-5°C, Снег ❄️</div>
+                    </div>
+                    <div class="menu-block" style="flex:1;">
+                        <div class="menu-title">Курсы (НБРБ)</div>
+                        <div style="padding:10px;">$ USD: 1920<br>€ EUR: 2050</div>
+                    </div>
+                </div>
+
+                <div class="app-box">
+                    <div style="font-weight:bold; color:#003366;">🎨 Web Paint 1.0</div>
+                    <div>
+                        Цвет: <input type="color" id="paintColor">
+                        <button onclick="clearCanvas()">Очистить</button>
+                        <button onclick="saveCanvas()">Скачать</button>
+                    </div>
+                    <canvas id="drawCanvas" width="500" height="250"></canvas>
+                </div>
+
+                <div class="app-box">
+                    <div style="font-weight:bold; color:#003366;">📝 Simple Word</div>
+                    <textarea id="wordText" style="width:98%; height:100px;" placeholder="Пишите текст..."></textarea>
+                    <button onclick="saveText()">Сохранить файлом</button>
+                </div>
+            </div>
+
+            <div id="friends" class="page">
+                <h2 style="color: #e6007e;">FRIENDS.HTML</h2>
+                <div style="background:#ffe; padding:10px; border:1px solid #ccc; margin-bottom:10px;">
+                    <b>Регистрация:</b> Введите имя и найдите друзей!
+                </div>
+                <table border="1" width="100%" cellpadding="5" style="border-collapse:collapse; border-color:#ccc;">
+                    <tr style="background:#eee;"><th>Аватар</th><th>Кто</th><th>Статус</th><th>Действие</th></tr>
+                    <tr><td>😎</td><td><b>Олег, 16</b></td><td>Ищу клан в CS 1.6</td><td><a href="#">Написать</a></td></tr>
+                    <tr><td>👩‍🦰</td><td><b>Марина, 15</b></td><td>Люблю Аврил Лавин</td><td><a href="#">Написать</a></td></tr>
+                    <tr><td>🎸</td><td><b>Рок_н_Ролл, 17</b></td><td>Собираю группу</td><td><a href="#">Написать</a></td></tr>
+                </table>
+            </div>
+
+            <div id="files" class="page files-style">
+                <h1>Index of /files/downloads</h1>
+                <p>Parent Directory</p>
+                <div class="file-row">[FILE] <a href="#">Скачать файл 1 (Setup.exe)</a> - 1.2 MB</div>
+                <div class="file-row">[FILE] <a href="#">Скачать файл 2 (Music.mp3)</a> - 3.5 MB</div>
+                <div class="file-row">[FILE] <a href="#">Скачать файл 3 (Referat.doc)</a> - 0.5 MB</div>
+                <div class="file-row">[FILE] <a href="#">Скачать файл 4 (Matrix.scr)</a> - 0.2 MB</div>
+                <hr>
+                <i>Apache/1.3.27 Server at TAT.BY Port 80</i>
+            </div>
+
+        </div>
+
+        <div class="sidebar-right">
+            <div class="menu-block">
+                <div class="menu-title">Вход</div>
+                <div class="menu-items" style="padding:5px;">
+                    Логин: <input type="text" style="width:90%"><br>
+                    Пароль: <input type="password" style="width:90%"><br>
+                    <button>Войти</button>
+                </div>
+            </div>
+
+            <div class="vk-widget">
+                <div class="vk-header">ВКонтакте Чат</div>
+                <div class="vk-chat-area" id="vkChatArea">
+                    <div style="color:gray;">Войдите через VK...</div>
+                </div>
+                <input type="text" id="vkInput" style="width:95%; margin:2px;" placeholder="Сообщение...">
+                <button style="width:100%" onclick="sendVkMessage()">Отправить</button>
+            </div>
+        </div>
+    </div>
+    
+    <div style="text-align:center; padding: 20px; border-top: 1px solid #ccc; margin-top: 20px;">
+        &copy; 2000-2003 "TAT.BY". Все права защищены.
+    </div>
+</div>
+
+<script>
+    // 1. ПЕРЕКЛЮЧЕНИЕ СТРАНИЦ
+    function showPage(pageId) {
+        // Скрываем все страницы
+        var pages = document.querySelectorAll('.page');
+        pages.forEach(function(page) {
+            page.style.display = 'none';
+        });
+        // Показываем нужную
+        document.getElementById(pageId).style.display = 'block';
+    }
+
+    // 2. ЧАТ
+    function sendVkMessage() {
+        var input = document.getElementById('vkInput');
+        var chat = document.getElementById('vkChatArea');
+        var msg = input.value;
+        if(msg.trim() !== "") {
+            var userLine = document.createElement('div');
+            userLine.innerHTML = "<b>Вы:</b> " + msg;
+            chat.appendChild(userLine);
+            input.value = "";
+            
+            setTimeout(function(){
+                var botLine = document.createElement('div');
+                botLine.style.color = "#cc0000";
+                botLine.innerHTML = "<b>Admin:</b> Привет на TAT.BY!";
+                chat.appendChild(botLine);
+                chat.scrollTop = chat.scrollHeight;
+            }, 1000);
+        }
+    }
+
+    // 3. WORD (СОХРАНЕНИЕ)
+    function saveText() {
+        var text = document.getElementById('wordText').value;
+        var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
+        var link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "document.txt";
+        link.click();
+    }
+
+    // 4. PAINT (РИСОВАЛКА)
+    var canvas = document.getElementById('drawCanvas');
+    var ctx = canvas.getContext('2d');
+    var painting = false;
+
+    function startPosition(e) { painting = true; draw(e); }
+    function endPosition() { painting = false; ctx.beginPath(); }
+    function draw(e) {
+        if (!painting) return;
+        ctx.lineWidth = 3;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = document.getElementById('paintColor').value;
+        
+        var rect = canvas.getBoundingClientRect();
+        ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+    }
+    
+    canvas.addEventListener('mousedown', startPosition);
+    canvas.addEventListener('mouseup', endPosition);
+    canvas.addEventListener('mousemove', draw);
+
+    function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+    function saveCanvas() { 
+        var link = document.createElement('a');
+        link.download = 'drawing.png';
+        link.href = canvas.toDataURL();
+        link.click();
+    }
+</script>
+
+</body>
+</html>

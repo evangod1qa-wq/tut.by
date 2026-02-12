@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Dark Liquid Glass</title>
+    <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --accent: #00d4ff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: #050508;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        /* Анимированный фон */
+        .bg-blobs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            filter: blur(80px);
+        }
+
+        .blob {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.15), transparent);
+            border-radius: 50%;
+            animation: move 25s infinite alternate;
+        }
+
+        @keyframes move {
+            from { transform: translate(-10%, -10%); }
+            to { transform: translate(100%, 50%); }
+        }
+
+        /* Стеклянная карточка входа */
+        .login-card {
+            width: 100%;
+            max-width: 400px;
+            padding: 50px 40px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .login-card h2 {
+            font-weight: 200;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            background: linear-gradient(to bottom, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Поля ввода */
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            outline: none;
+            color: white;
+            font-size: 14px;
+            box-sizing: border-box;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--accent);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+        }
+
+        /* Кнопка-ссылка (ваше требование использовать <a>) */
+        .btn-login {
+            display: block;
+            width: 100%;
+            padding: 15px 0;
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: 0.4s;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-login:hover {
+            background: white;
+            color: black;
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-links {
+            margin-top: 25px;
+            font-size: 13px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        footer {
+            position: absolute;
+            bottom: 30px;
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-blobs">
+        <div class="blob" style="top: 10%; left: -5%;"></div>
+        <div class="blob" style="bottom: 10%; right: -5%; background: radial-gradient(circle, rgba(147, 51, 234, 0.1), transparent);"></div>
+    </div>
+
+    <div class="login-card">
+        <h2>Войти</h2>
+        <form>
+            <div class="input-group">
+                <input type="email" placeholder="Email" required>
+            </div>
+            <div class="input-group">
+                <input type="password" placeholder="Пароль" required>
+            </div>
+            <a href="inbox.htm" class="btn-login">Авторизоваться</a>
+        </form>
+
+        <div class="footer-links">
+            <a href="none">Забыли пароль?</a>
+            <span>•</span>
+            <a href="reg.htm">Регистрация</a>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 DARK LIQUID INTERFACE
+    </footer>
+
+</body>
+</html>
